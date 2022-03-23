@@ -168,14 +168,14 @@ color: #34bfa3  !important;
 
 .righe_bottom_box{
   margin-left:32px;
-  width: 404px;
+  width: 424px;
   height:388px;
 }
  .righe_bottom_box h3{
    color: #a09cb8;    font-weight: 400 !important;
  }
 .left_bottom_box{
-  width: 1063px;
+  width: 1116px; // 1116
   height:388px;
 }
 </style>
