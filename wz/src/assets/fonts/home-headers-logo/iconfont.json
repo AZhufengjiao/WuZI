@@ -1,0 +1,156 @@
+{
+  "id": "",
+  "name": "",
+  "font_family": "iconfont",
+  "css_prefix_text": "icon-",
+  "description": "",
+  "glyphs": [
+    {
+      "icon_id": "1036",
+      "name": "医药箱",
+      "font_class": "yiyaoxiang",
+      "unicode": "f006b",
+      "unicode_decimal": 983147
+    },
+    {
+      "icon_id": "107548",
+      "name": "x",
+      "font_class": "x",
+      "unicode": "e63a",
+      "unicode_decimal": 58938
+    },
+    {
+      "icon_id": "1378207",
+      "name": "折叠图标-已折叠",
+      "font_class": "zhedietubiao-yizhedie",
+      "unicode": "e626",
+      "unicode_decimal": 58918
+    },
+    {
+      "icon_id": "1443901",
+      "name": "折叠图标-折叠",
+      "font_class": "zhedietubiao-zhedie",
+      "unicode": "e72f",
+      "unicode_decimal": 59183
+    },
+    {
+      "icon_id": "2590375",
+      "name": "加号",
+      "font_class": "jiahao",
+      "unicode": "e601",
+      "unicode_decimal": 58881
+    },
+    {
+      "icon_id": "3900517",
+      "name": "急救箱",
+      "font_class": "jjx",
+      "unicode": "e60e",
+      "unicode_decimal": 58894
+    },
+    {
+      "icon_id": "4520058",
+      "name": "加号",
+      "font_class": "jiahao1",
+      "unicode": "e60d",
+      "unicode_decimal": 58893
+    },
+    {
+      "icon_id": "5921614",
+      "name": "折叠",
+      "font_class": "zhedie",
+      "unicode": "e617",
+      "unicode_decimal": 58903
+    },
+    {
+      "icon_id": "9030927",
+      "name": "急救箱",
+      "font_class": "jijiuxiang",
+      "unicode": "e60b",
+      "unicode_decimal": 58891
+    },
+    {
+      "icon_id": "9684808",
+      "name": "角标-删除O",
+      "font_class": "jiaobiao-shanchuO",
+      "unicode": "e612",
+      "unicode_decimal": 58898
+    },
+    {
+      "icon_id": "10515220",
+      "name": "折叠",
+      "font_class": "zhedie1",
+      "unicode": "e647",
+      "unicode_decimal": 58951
+    },
+    {
+      "icon_id": "15926256",
+      "name": "急救箱",
+      "font_class": "jijiuxiang1",
+      "unicode": "e6c1",
+      "unicode_decimal": 59073
+    },
+    {
+      "icon_id": "16020747",
+      "name": "折叠2",
+      "font_class": "zhedie2",
+      "unicode": "e620",
+      "unicode_decimal": 58912
+    },
+    {
+      "icon_id": "16020767",
+      "name": "折叠1",
+      "font_class": "zhedie11",
+      "unicode": "e621",
+      "unicode_decimal": 58913
+    },
+    {
+      "icon_id": "16230571",
+      "name": "折叠",
+      "font_class": "zhedie3",
+      "unicode": "e613",
+      "unicode_decimal": 58899
+    },
+    {
+      "icon_id": "16371715",
+      "name": "取消删除x 红",
+      "font_class": "quxiaoshanchuxhong",
+      "unicode": "e663",
+      "unicode_decimal": 58979
+    },
+    {
+      "icon_id": "18440748",
+      "name": "x",
+      "font_class": "x1",
+      "unicode": "e63f",
+      "unicode_decimal": 58943
+    },
+    {
+      "icon_id": "19644563",
+      "name": "折叠（横向）",
+      "font_class": "zhediehengxiang",
+      "unicode": "e643",
+      "unicode_decimal": 58947
+    },
+    {
+      "icon_id": "19644578",
+      "name": "折叠（竖向）",
+      "font_class": "zhedieshuxiang",
+      "unicode": "e646",
+      "unicode_decimal": 58950
+    },
+    {
+      "icon_id": "22546563",
+      "name": "红色删除X",
+      "font_class": "hongseshanchuX",
+      "unicode": "e648",
+      "unicode_decimal": 58952
+    },
+    {
+      "icon_id": "26413761",
+      "name": "医疗箱，急救箱",
+      "font_class": "a-yiliaoxiangjijiuxiang",
+      "unicode": "e699",
+      "unicode_decimal": 59033
+    }
+  ]
+}
