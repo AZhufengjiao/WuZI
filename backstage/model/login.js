@@ -5,7 +5,7 @@ const {
 
 // 注册用户
 module.exports.register = async (username, password, mobile, email, role, state) => {
-    return await query(`INSERT INTO user(username,PASSWORD,mobile,email,role, state) 
+    return await query(`INSERT INTO user(username,password,mobile,email,role, state) 
     VALUES('${username}','${password}','${mobile}','${email}',${role},${state})`)
 }
 
@@ -16,5 +16,5 @@ module.exports.findUserByUserName = async (username) => {
 
 // 用户登录
 module.exports.userLogin = async (username, password) => {
-    return await query(`SELECT * FROM user WHERE username=? AND PASSWORD=?`, [username, password])
+    return await query(`SELECT * FROM user WHERE username=? AND password=?`, [username, password])
 }
