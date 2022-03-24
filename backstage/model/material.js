@@ -23,7 +23,7 @@ module.exports.materialNameLike = async ({
 }) => {
     return await query(`SELECT * FROM totalmaterial WHERE materialname LIKE '%${materialName}%' ORDER BY tid LIMIT ${(page-1)*num},${num}`)
 }
-// 获取物资模糊查询总数  
+// 获取物资模糊查询总数
 module.exports.materialNameLikeTotal = async (materialname) => {
     return await query(`SELECT COUNT(tid) AS total  FROM totalmaterial WHERE  materialname LIKE '%${materialname}%'`)
 }
@@ -78,5 +78,5 @@ module.exports.materialScarcitySql = async ({
     num,
     page
 }) => {
-    return await query(`SELECT  * FROM  materialsScarcity  LIMIT ${(page-1)*num},${num}`)
+    return await query(`SELECT  * FROM  materialsscarcity  LIMIT ${(page-1)*num},${num}`)
 }
