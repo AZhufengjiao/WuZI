@@ -8,7 +8,7 @@ module.exports.materialListQuery = async ({
     page,
     num
 }) => {
-    return await query(`SELECT  COUNT(1) AS 'count' ,materialname ,type,SUM(quantity) AS quantity, SUM(price)AS price FROM totalmaterial   GROUP BY materialname LIMIT ${(page-1)*num},${num}`)
+    return await query(`SELECT  tid, COUNT(1) AS 'count' ,materialname ,type,SUM(quantity) AS quantity, SUM(price)AS price FROM totalmaterial   GROUP BY tid LIMIT ${(page-1)*num},${num}`)
 }
 // 查询总物资总数
 module.exports.materialListTotal = async () => {
