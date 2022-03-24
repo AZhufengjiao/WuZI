@@ -97,6 +97,7 @@ SELECT NOW()
 CREATE TABLE `totalmaterial`(
 	`tid` INT( 11 ) NOT NULL AUTO_INCREMENT PRIMARY KEY,  -- 物资id
 	`id` INT( 11 ) NOT NULL ,-- 用户捐赠id
+	 `date` DATETIME  NOT NULL ,   -- 日期，如‘c’ 
 	`username` VARCHAR(20) DEFAULT NULL,    -- 用户姓名
 	`materialname` VARCHAR(25) DEFAULT NULL,    -- 物资名
 	`type` BOOLEAN DEFAULT 0 ,  -- 物品是0   现金是1
@@ -142,7 +143,6 @@ DROP TABLE  principal
 CREATE TABLE `materialsScarcity`(
 	`sid` INT( 11 ) NOT NULL AUTO_INCREMENT PRIMARY KEY,  -- 稀缺物资id
 	`pid` INT( 11 ) NOT NULL ,-- 负责人pid
-	 `date` DATETIME  NOT NULL ,   -- 日期，如‘c’ 
 	`username` VARCHAR(20) DEFAULT NULL,    -- 物资名
 	`quantity` INT(25) DEFAULT NULL,  -- 物资数量
 	`state` INT(25) DEFAULT NULL -- 采购状态
