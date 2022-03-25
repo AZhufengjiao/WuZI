@@ -9,7 +9,9 @@ const {
   putMaterialsState,
   delState,
   materialScarcityList,
-  getMaterialByDate, // 稀缺物资
+  getMaterialByDate,
+  getPrincipal,
+  searchScarceMaterial, // 稀缺物资
 } = require("../controller/materialList");
 
 router.prefix("/material");
@@ -33,5 +35,9 @@ router.delete("/delState", delState);
 router.get("/materialScarcityList", materialScarcityList);
 
 router.get("/getMaterialByDate", getMaterialByDate);
+
+router.get("/getPrincipal", getPrincipal);
+
+router.get("/searchScarceMaterial", searchScarceMaterial);
 
 module.exports = router;
