@@ -11,17 +11,21 @@
       </div>
     </router-link>
 
-    <div class="grid-content bg-purple">
+    <router-link to="/home/material/storage">
+    <div @click="handleCli('3-4')" class="grid-content bg-purple">
       <img src="@/assets/images/f2.png" alt="">
       <br>
       <span>物资入库</span>
     </div>
-    <div class="grid-content bg-purple">
+    </router-link>
+
+    <router-link to="/home/material/chuku">
+    <div @click="handleCli('3-5')" class="grid-content bg-purple">
       <img src="@/assets/images/f3.png" alt="">
       <br>
       <span>物资出库</span>
     </div>
-
+    </router-link>
 
     <router-link to="/home/material/scarcity">
     <div @click="handleCli('3-3')" class="grid-content bg-purple">

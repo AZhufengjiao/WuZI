@@ -20,21 +20,21 @@
         </el-input>
       </el-col>
 
-      <!--   列   时间 -->
-      <el-col :span="5">
-        <div class="demo-date-picker"     >
-          <div class="block"    >
-            <el-date-picker size="large"
-                            v-model="value1"
-                            type="daterange"
-                            @change="datePickerHandle"
-                            range-separator="To"
-                            start-placeholder="Start date"
-                            end-placeholder="End date"
-            />
-          </div>
-        </div>
-      </el-col>
+<!--      &lt;!&ndash;   列   时间 &ndash;&gt;-->
+<!--      <el-col :span="5">-->
+<!--        <div class="demo-date-picker"     >-->
+<!--          <div class="block"    >-->
+<!--            <el-date-picker size="large"-->
+<!--                            v-model="value1"-->
+<!--                            type="daterange"-->
+<!--                            @change="datePickerHandle"-->
+<!--                            range-separator="To"-->
+<!--                            start-placeholder="Start date"-->
+<!--                            end-placeholder="End date"-->
+<!--            />-->
+<!--          </div>-->
+<!--        </div>-->
+<!--      </el-col>-->
     </el-row>
 
 <!--  表格  -->
@@ -44,13 +44,12 @@
               :data="MaterialsTogetherList.value"
               style="width: 100%;margin-top: 20px">
       <el-table-column v-if=" flag" type="index" width="50" />
-      <el-table-column prop="date" label="日期"  />
       <el-table-column v-if="!flag" type="selection" width="55" />
       <el-table-column prop="type" label="物资类型" width="120" />
       <el-table-column prop="materialname" label="物资名称" width="120" />
-      <el-table-column v-if="flag " prop="count" label="捐赠数量" width="120" />
+      <el-table-column v-if="flag " prop="count" label="捐赠次数" width="120" />
       <el-table-column v-if="!flag " prop="username" label="捐赠人" width="120" />
-      <el-table-column prop="quantity" label="物资数量" width="600" />
+      <el-table-column prop="quantity" label="物资总数量" width="600" />
       <el-table-column fixed="right" label="操作" width="120">
         <template #default="scope">
 
@@ -145,7 +144,7 @@ import {
   materialsNameList,
   delMaterials,
   updateMaterials,
-  updateMaterialsP, putMaterialsState, DelMaterialsState
+  updateMaterialsP, putMaterialsState, DelMaterialsState, getDateMaterials
 } from "../../../api/materials";
 import {ElMessage} from "element-plus";
 export default {
@@ -154,24 +153,13 @@ export default {
     Bread ,Search,Paging
   },
   setup(){
-    // 时间
-    const value1 = ref('')
-    const datePickerHandle=()=>{
-      let reg=/\\|\//g
-      // 开始时间
-      let stateData=value1.value[0].toLocaleString().split(' ')[0].replace(reg,'-')
-      // 结束时间
-      let endData=value1.value[1].toLocaleString().split(' ')[0].replace(reg,'-')
-      console.log( stateData,endData)
-    }
-
     //分页数据
     let flag=ref(true)
     let PagingList=reactive({
       // 分页 总数量
       total:8,
       // 页容量
-      num:12,
+      num:10,
       // 页码
       page:1
     })
@@ -206,6 +194,7 @@ export default {
       })
     }
 
+
     // 表格列表
     let MaterialsTogetherList=reactive([])
     // 获取表格数据
@@ -237,6 +226,32 @@ export default {
       selectList.value=selection
       console.log( selectList.value)
     }
+
+
+    // 时间
+    const value1 = ref('')
+    const datePickerHandle=()=>{
+      let reg=/\\|\//g
+      // 开始时间
+      let startDate=value1.value[0].toLocaleString().split(' ')[0].replace(reg,'-')
+      // 结束时间
+      let endDate=value1.value[1].toLocaleString().split(' ')[0].replace(reg,'-')
+      let obj={
+        startDate,endDate
+        ,pageNum:PagingList.page,
+        pageSize:PagingList.num
+      }
+      getDateMaterials(obj).then((res)=>{
+        if(res.code==200){
+          MaterialsTogetherList.value=res.data.items
+          PagingList.total=res.data.total
+          console.log(res.data)
+        }
+      })
+    }
+
+
+
     // 给全选设置一个开关
     let SelectAllFlag=ref(false)
     // 表格全选改变触发

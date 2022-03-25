@@ -28,9 +28,21 @@ export function  putMaterialsState(tid){
 export  function  DelMaterialsState(){
     return requestWithoutToken('/material/delState','delete')
 }
+// 总物资时间查找
+export function getDateMaterials({startDate, endDate,pageNum,pageSize}){
+    return requestWithoutToken('/material/getMaterialByDate','get',{startDate,endDate,pageNum,pageSize})
+}
 
 
 // 稀缺物资数据
 export  function  materialScarcityList({num,page}){
     return requestWithoutToken('/material/materialScarcityList','get',{num,page})
+}
+// 获取负责人
+export  function  materialPrincipal(){
+    return requestWithoutToken('/material/getPrincipal','get')
+}
+// 稀缺物资模糊查询
+export function materialScarcityLikeName({materialName,pageNum,pageSize}){
+    return requestWithoutToken('/material/searchScarceMaterial','get',{materialName,pageNum,pageSize})
 }
