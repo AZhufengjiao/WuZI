@@ -14,9 +14,22 @@ const {
   DelState,
   materialScarcitySql, // 获取稀缺物资数据
   findMaterialByDate,
+  findMaterialByDateCount,
+  findPrincipal,
+  findSearchScarceMaterial,
+  materialScarcityCountSql,
+  findSearchScarceMaterialCount,
 } = require("../model/material");
 // 后端校验
 const Joi = require("joi");
+
+// 引入修改日期库
+const moment = require("moment");
+
+// 定义修改日期的函数
+function updateDate(date) {
+  return moment(date).format("YYYY-MM-DD  h:mm");
+}
 
 // 获取总物资列表数据
 module.exports.materialList = async (ctx) => {
@@ -27,6 +40,7 @@ module.exports.materialList = async (ctx) => {
   const res = await materialListQuery(obj);
   let arr = res;
   arr.forEach((item) => {
+    item.date = updateDate(item.date);
     // 物品
     if (item.type == 1) {
       item.quantity = item.price;
@@ -256,32 +270,108 @@ module.exports.delState = async (ctx) => {
     });
   }
 };
+
 // 获取稀缺物资数据
 module.exports.materialScarcityList = async (ctx) => {
-  let obj = {
-    num: ctx.request.query.num,
-    page: ctx.request.query.page,
-  };
-  const arr = await materialScarcitySql(obj);
+  let { num, page } = ctx.request.query;
+  const arr = await materialScarcitySql({ num, page });
+  const total = await materialScarcityCountSql();
 
   ctx.body = {
     status: 200,
-    results: arr,
+    data: {
+      items: arr,
+      total: total[0].total,
+      num: Number(num),
+      page: Number(page),
+    },
     message: "稀缺物资列表获取成功",
   };
 };
 
 // 根据日期获取数据
 module.exports.getMaterialByDate = async (ctx) => {
-  // 开始日期，结束日期
-  let { startDate, endDate } = ctx.request.query;
-  console.log(startDate, endDate);
+  //    开始日期， 结束日期，  当前页， 每页多少条
+  let { startDate, endDate, pageNum, pageSize } = ctx.request.query;
 
-  let dateMaterial = await findMaterialByDate({ startDate, endDate });
-  if (dateMaterial[0]) {
+  // 从数据库中根据日期查找数据
+  let dateMaterial = await findMaterialByDate({
+    startDate,
+    endDate,
+    pageNum,
+    pageSize,
+  });
+
+  // 使用moment修改所有数据的日期格式
+  dateMaterial.forEach((item) => {
+    item.date = updateDate(item.date);
+
+    // 物品
+    if (item.type == 1) {
+      item.quantity = item.price;
+      item.type = "现金";
+    } else {
+      item.type = "物品";
+    }
+  });
+
+  // 获取数据总数量
+  let materialByDateCount = await findMaterialByDateCount({
+    startDate,
+    endDate,
+  });
+
+  return (ctx.body = {
+    code: 200,
+    message: "数据获取成功",
+    data: {
+      items: dateMaterial,
+      total: materialByDateCount[0].total,
+      pageNum: Number(pageNum),
+      pageSize: Number(pageSize),
+    },
+  });
+};
+
+// 获取负责人列表
+module.exports.getPrincipal = async (ctx) => {
+  let principal = await findPrincipal();
+
+  if (principal[0]) {
     return (ctx.body = {
       code: 200,
-      data: dateMaterial,
+      message: "负责人数据获取成功",
+      data: {
+        principal,
+      },
     });
   }
+
+  return (ctx.body = {
+    code: 500,
+    message: "负责人数据获取失败",
+  });
+};
+
+// 搜索稀缺物资
+module.exports.searchScarceMaterial = async (ctx) => {
+  let { materialName, pageNum, pageSize } = ctx.request.query;
+  let searchScarceMaterial = await findSearchScarceMaterial({
+    materialName,
+    pageNum,
+    pageSize,
+  });
+
+  console.log(materialName);
+
+  let total = await findSearchScarceMaterialCount({ materialName });
+
+  return (ctx.body = {
+    code: 200,
+    message: "稀缺物资模糊查询数据获取成功",
+    data: {
+      searchScarceMaterial,
+      total: total[0].total,
+    },
+  });
 };

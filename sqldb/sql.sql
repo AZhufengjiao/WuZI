@@ -50,8 +50,7 @@ ALTER TABLE emp ADD CONSTRAINT ck_emp_sex CHECK
 -- 添加用户捐赠列表                         ---------------------------------------------------------------------------------------------------------------------    捐赠物资列表哦      -------------------------------------------------------------------------------------
 CREATE TABLE `userDonate`(
 	`did` INT( 11 ) NOT NULL AUTO_INCREMENT PRIMARY KEY,  -- 捐赠id
-	`id` INT( 11 ) NOT NULL ,-- 用户捐赠id
-	`username` VARCHAR(20) DEFAULT NULL,    -- 用户姓名
+	`id` INT( 11 ) NOT NULL ,-- 用户id
 	`goodname` VARCHAR(25) DEFAULT NULL,    -- 物资名
 	`address` VARCHAR(25)DEFAULT NULL,   -- 地址
 	`types` BOOLEAN DEFAULT 0 ,  -- 物品是0   现金是1
@@ -97,7 +96,6 @@ SELECT NOW()
 CREATE TABLE `totalmaterial`(
 	`tid` INT( 11 ) NOT NULL AUTO_INCREMENT PRIMARY KEY,  -- 物资id
 	`id` INT( 11 ) NOT NULL ,-- 用户捐赠id
-	 `date` DATETIME  NOT NULL ,   -- 日期，如‘c’ 
 	`username` VARCHAR(20) DEFAULT NULL,    -- 用户姓名
 	`materialname` VARCHAR(25) DEFAULT NULL,    -- 物资名
 	`type` BOOLEAN DEFAULT 0 ,  -- 物品是0   现金是1
@@ -108,7 +106,7 @@ CREATE TABLE `totalmaterial`(
 
 INSERT INTO totalmaterial  VALUES(1,12,'花花','手机',0 ,10,0,0)
 INSERT INTO totalmaterial( id,username,materialname, `type`,quantity,price,state ) 
-VALUES(12,'花花','手机',0 ,10,0,0),(NULL,'花花','手机',0 ,1000,0,0),(12,'花花','现金',1 , 0,100,0),(NULL,'花花','现金',1 ,0,1000,0),
+VALUES(12,'花花','手机',0 ,10,0,0),(21,'花花','手机',0 ,1000,0,0),(12,'花花','现金',1 , 0,100,0),(20,'花花','现金',1 ,0,1000,0),
 (16,'admin','口罩',0 ,1300,0,0),(13,'11113223','泡面',0 ,1000,0,0),(16,'admin','现金',1 , 0,200,0),(17,'1321','手套',0 ,10,0,0)
 
 -- 获取总物资数据

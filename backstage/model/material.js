@@ -4,7 +4,7 @@ const { query } = require("../database/mysql");
 // 总物资列表
 module.exports.materialListQuery = async ({ page, num }) => {
   return await query(
-    `SELECT  tid, COUNT(1) AS 'count', date,materialname ,type,SUM(quantity) AS quantity, SUM(price)AS price FROM totalmaterial   GROUP BY tid LIMIT ${
+    `SELECT COUNT(materialname) AS 'count', materialname, SUM(quantity) AS quantity, SUM(price)AS price FROM totalmaterial   GROUP BY materialname LIMIT ${
       (page - 1) * num
     },${num}`
   );
@@ -81,12 +81,54 @@ module.exports.DelState = async () => {
 // 获取稀缺物资数据
 module.exports.materialScarcitySql = async ({ num, page }) => {
   return await query(
-    `SELECT  * FROM  materialsscarcity  LIMIT ${(page - 1) * num},${num}`
+    `SELECT *, p.principalName as principalName FROM materialsscarcity m, principal p where m.pid = p.pid LIMIT ${
+      (page - 1) * num
+    },${num}`
   );
 };
 
+// 获取稀缺物资数据总数量
+module.exports.materialScarcityCountSql = async () => {
+  return await query(`SELECT  count(*) as total FROM  materialsscarcity`);
+};
+
 // 根据日期获取总物资数据
-module.exports.findMaterialByDate = async ({ startDate, endDate }) => {
-  let sql = `select * from totalmaterial where date >= '${startDate}' && date <= '${endDate}';`;
+module.exports.findMaterialByDate = async ({
+  startDate,
+  endDate,
+  pageNum,
+  pageSize,
+}) => {
+  let sql = `select * from totalmaterial where date >= '${startDate}' && date <= '${endDate} limit ${
+    (pageNum - 1) * pageSize
+  }, ${pageSize}';`;
   return await query(sql);
+};
+
+// 根据日期获取总物资数据的总数量
+module.exports.findMaterialByDateCount = async ({ startDate, endDate }) => {
+  let sql = `select count(*) as total from totalmaterial where date >= '${startDate}' && date <= '${endDate}';`;
+  return await query(sql);
+};
+
+module.exports.findPrincipal = async () => {
+  let sql = `select pid as id, username as principal from principal;`;
+  return query(sql);
+};
+
+// 查找搜索
+module.exports.findSearchScarceMaterial = async ({
+  materialName,
+  pageNum,
+  pageSize,
+}) => {
+  let sql = `select * from materialsscarcity where scarcityname LIKE '${materialName}%' OR scarcityname LIKE '%${materialName}' OR scarcityname LIKE '%${materialName}%' limit ${
+    (pageNum - 1) * pageSize
+  }, ${pageSize};`;
+  return query(sql);
+};
+
+module.exports.findSearchScarceMaterialCount = async ({ materialName }) => {
+  let sql = `select count(*) as total from materialsscarcity where scarcityname LIKE '${materialName}%' OR scarcityname LIKE '%${materialName}' OR scarcityname LIKE '%${materialName}%';`;
+  return query(sql);
 };
