@@ -4,7 +4,7 @@ const { query } = require("../database/mysql");
 // 总物资列表
 module.exports.materialListQuery = async ({ page, num }) => {
   return await query(
-    `SELECT  tid, COUNT(1) AS 'count' ,materialname ,type,SUM(quantity) AS quantity, SUM(price)AS price FROM totalmaterial   GROUP BY tid LIMIT ${
+    `SELECT  tid, COUNT(1) AS 'count', date,materialname ,type,SUM(quantity) AS quantity, SUM(price)AS price FROM totalmaterial   GROUP BY tid LIMIT ${
       (page - 1) * num
     },${num}`
   );

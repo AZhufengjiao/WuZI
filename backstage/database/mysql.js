@@ -7,7 +7,7 @@ var pool = mysql.createPool({
   connectionLimit: 5,
   host: "localhost",
   user: "root",
-  password: "root",
+  password: "123456aa",
   database: "wuzidb",
 });
 
