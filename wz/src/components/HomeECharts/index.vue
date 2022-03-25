@@ -168,7 +168,7 @@ color: #34bfa3  !important;
 
 .righe_bottom_box{
   margin-left:32px;
-  width: 424px;
+  width: 403px;//403  424
   height:388px;
 }
  .righe_bottom_box h3{
@@ -176,6 +176,7 @@ color: #34bfa3  !important;
  }
 .left_bottom_box{
   width: 1116px; // 1116
+  width: 1064px; // 1064
   height:388px;
 }
 </style>

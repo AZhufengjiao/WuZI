@@ -57,6 +57,18 @@ export default {
   text-align: center;
 }
 
+
+#app .MaterialS_container  .el-dialog__header{
+  background-color:#3a517a
+}
+#app .MaterialS_container   .el-dialog__title{
+  color: white;
+}
+#app .MaterialS_container .el-dialog__footer{
+  text-align: center;
+}
+
+
 /* 捐赠物资表格*/
 #app  .donate_container .el-scrollbar__view .el-table__header,
 #app  .donate_container .el-scrollbar__view .el-table__body{

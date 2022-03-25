@@ -86,6 +86,23 @@ const routes = [
                         },
                         component: () => import("../components/Materials/MaterialScarcity/index.vue"),
                         meta:{title:'稀缺物资'},
+                    },
+                    {
+                        path: "/home/material/storage",
+                        name: {
+                            name:"MaterialStorage",
+                            index:'3-4'
+                        },
+                        component: () => import("../components/Materials/MaterialsStorage/index.vue"),
+                        meta:{title:'入库物资'},
+                    }, {
+                        path: "/home/material/chuku",
+                        name: {
+                            name:"MaterialChuku",
+                            index:'3-5'
+                        },
+                        component: () => import("../components/Materials/MaterialChuku/index.vue"),
+                        meta:{title:'出库物资'},
                     }
                 ]
             },

@@ -55,8 +55,13 @@
         <el-menu-item index="3-3">稀缺物资</el-menu-item>
       </router-link>
 
+      <router-link to="/home/material/storage">
       <el-menu-item index="3-4">入库物资</el-menu-item>
+      </router-link>
+
+      <router-link to="/home/material/chuku">
       <el-menu-item index="3-5">出库物资</el-menu-item>
+      </router-link>
     </el-sub-menu>
 
     <el-sub-menu index="4">
