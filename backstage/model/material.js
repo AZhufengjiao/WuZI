@@ -4,14 +4,16 @@ const { query } = require("../database/mysql");
 // 总物资列表
 module.exports.materialListQuery = async ({ page, num }) => {
   return await query(
-    `SELECT COUNT(materialname) AS 'count', materialname, SUM(quantity) AS quantity, SUM(price)AS price FROM totalmaterial   GROUP BY materialname LIMIT ${
+    `SELECT COUNT(materialname) AS 'count', materialname, SUM(quantity) AS quantity, SUM(price) AS price FROM totalmaterial   GROUP BY materialname LIMIT ${
       (page - 1) * num
     },${num}`
   );
 };
 // 查询总物资总数
 module.exports.materialListTotal = async () => {
-  return await query(`SELECT COUNT(tid) AS total  FROM totalmaterial `);
+  return await query(
+    `SELECT COUNT(materialname) AS total  FROM totalmaterial GROUP BY materialname;`
+  );
   // return await query(`SELECT COUNT(tid) AS total  FROM totalmaterial `)
 };
 // 模糊查询物资名
@@ -112,7 +114,7 @@ module.exports.findMaterialByDateCount = async ({ startDate, endDate }) => {
 };
 
 module.exports.findPrincipal = async () => {
-  let sql = `select pid as id, username as principal from principal;`;
+  let sql = `select pid as id, principalName as principal from principal;`;
   return query(sql);
 };
 
@@ -122,7 +124,7 @@ module.exports.findSearchScarceMaterial = async ({
   pageNum,
   pageSize,
 }) => {
-  let sql = `select * from materialsscarcity where scarcityname LIKE '${materialName}%' OR scarcityname LIKE '%${materialName}' OR scarcityname LIKE '%${materialName}%' limit ${
+  let sql = `select *, p.principalName from materialsscarcity m, principal p where m.pid = p.pid AND (scarcityname LIKE '${materialName}%' OR scarcityname LIKE '%${materialName}' OR scarcityname LIKE '%${materialName}%') limit ${
     (pageNum - 1) * pageSize
   }, ${pageSize};`;
   return query(sql);
@@ -130,5 +132,31 @@ module.exports.findSearchScarceMaterial = async ({
 
 module.exports.findSearchScarceMaterialCount = async ({ materialName }) => {
   let sql = `select count(*) as total from materialsscarcity where scarcityname LIKE '${materialName}%' OR scarcityname LIKE '%${materialName}' OR scarcityname LIKE '%${materialName}%';`;
+  return query(sql);
+};
+
+// 添加入库数据
+module.exports.postMaterialOfStorage = async ({
+  id,
+  putStorageDate,
+  putMaterialType,
+  putMaterialName,
+  pid,
+  putMaterialAmount = 0,
+  putPriceAmount = 0,
+}) => {
+  let sql = `INSERT INTO putstorage(id, putStorageDate, putMaterialType, putMaterialName, pid, putMaterialAmount, putPriceAmount) VALUES('${id}', '${putStorageDate}', ${putMaterialType}, '${putMaterialName}', ${pid}, ${putMaterialAmount}, ${putPriceAmount})`;
+  return query(sql);
+};
+
+module.exports.findPutStorageList = async ({ pageNum, pageSize }) => {
+  let sql = `select ps.*, u.username, p.principalName from putstorage ps,principal p,user u where ps.id = u.id and ps.pid = p.pid limit ${
+    (pageNum - 1) * pageSize
+  }, ${pageSize};`;
+  return query(sql);
+};
+
+module.exports.findPutStorageCount = async () => {
+  let sql = `select count(*) as total from putstorage;`;
   return query(sql);
 };
