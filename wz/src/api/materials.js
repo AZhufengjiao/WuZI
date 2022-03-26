@@ -46,3 +46,6 @@ export  function  materialPrincipal(){
 export function materialScarcityLikeName({materialName,pageNum,pageSize}){
     return requestWithoutToken('/material/searchScarceMaterial','get',{materialName,pageNum,pageSize})
 }
+
+
+// 入库物资数据

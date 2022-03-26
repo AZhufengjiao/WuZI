@@ -3,9 +3,7 @@
     <el-table-column fixed  prop="RepDate" label="时间" width="150" />
     <el-table-column prop="username" label="姓名" width="120" />
     <el-table-column prop="goodname" label="物资名称" width="120" />
-
     <el-table-column prop="quantity"  label=" 物资数量 " width="120" />
-
     <el-table-column prop="address" label="地址" width="600" />
     <el-table-column fixed="right" label="操作" width="120">
 

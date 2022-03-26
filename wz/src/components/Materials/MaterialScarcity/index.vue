@@ -11,14 +11,10 @@
                       size="large"
                       placeholder="请输入稀缺物品名"
                       v-model="iptSearch"
-                      @blur="searchUser"
-                      @keydown.enter="searchUser"
+                      @input="searchUser"
+                      @blur="getTableData"
+                      @keydown.enter="getTableData"
         >
-          <template #append>
-            <el-button  @click="searchUser" >
-              <Search     style="width: 28px;height: 16px;"></Search>
-            </el-button>
-          </template>
         </el-input>
       </el-col>
 
@@ -37,6 +33,10 @@
           <el-tag v-if="scope.row.state==1" class="ml-2" type="info">待采购</el-tag>
         </template>
       </el-table-column>
+
+      <template>
+        <el-empty description="description" />
+      </template>
 
     </el-table>
 
@@ -59,6 +59,8 @@ export default {
     Bread,Search,Paging
   },
   setup(){
+    //搜索框数据
+    const iptSearch=ref('')
     // 分页
     let PagingList=ref({
       // 分页 总数量
@@ -83,6 +85,7 @@ export default {
     const tableData =ref([])
     // 获取稀缺物资函数
     function  getTableData(){
+      iptSearch.value=''
       let obj={
         num:PagingList.value.num,
         page:PagingList.value.page
@@ -99,13 +102,12 @@ export default {
       getTableData()
     })
 
-    //搜索框数据
-    const iptSearch=ref('')
+
     // 搜索框模糊查询
     const searchUser=()=>{
       console.log(iptSearch.value)
       // 获取参数名
-      let str=iptSearch.value
+      let str=iptSearch.value.trim()
       let reqParams = {
         materialName: str,
         pageNum:PagingList.value.page,
@@ -126,7 +128,7 @@ export default {
       iptSearch,
       donateToPage,
       toDataNum,
-      searchUser
+      searchUser,getTableData
     }
   }
 }

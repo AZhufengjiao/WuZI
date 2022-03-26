@@ -27,7 +27,7 @@
       <!--  表格  -->
       <el-table  border stripe highlight-current-row  :data="tableData" style="width: 100% ;margin-top: 20px">
         <el-table-column type="index" width="50" />
-        <el-table-column prop="username" label="物资名"  />
+        <el-table-column prop="scarcityName" label="物资名"  />
         <el-table-column prop="quantity" label="数量" />
         <el-table-column prop="pid" label="负责人" />
         <!-- 状态 -->
@@ -140,8 +140,8 @@ export default {
       materialScarcityList(obj).then((res)=>{
         if(res.status==200){
           console.log(res)
-          tableData.value=res.results
-
+          tableData.value=res.data.items
+          PagingList.value.total=res.data.total
         }
       })
     }
@@ -207,6 +207,7 @@ export default {
     const getOptions=()=>{
       materialPrincipal().then((res)=>{
         if(res.code==200){
+
           options.value=res.data.principal
           console.log( options.value)
         }

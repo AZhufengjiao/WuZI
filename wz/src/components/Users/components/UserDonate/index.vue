@@ -10,10 +10,11 @@
         <!--   列   搜索 -->
         <el-col :span="4"><div class="grid-content bg-purple"></div>
           <el-input     class="w-50 m-2"
-              @blur="searchUser"
+              @input="searchUser"
+              @blur="getUserDonateList"
               v-model="iptSearch"
               size="large"
-              @keydown.enter="searchUser"
+              @keydown.enter="getUserDonateList"
               placeholder="请输入搜索姓名"
           >
             <template #append>
@@ -78,7 +79,8 @@ export default {
         label: '物品',
       },
     ]
-
+    //搜索框数据
+    const iptSearch=ref('')
     //分页数据
     let PagingList=reactive({
       // 分页 总数量
@@ -103,6 +105,7 @@ export default {
     let UserDonateList=reactive([])
     // 获取表格数据
     const getUserDonateList=()=>{
+      iptSearch.value=''
       const res={
         page:PagingList.page,
         num:PagingList.num
@@ -112,9 +115,7 @@ export default {
         // res.results.forEach((item)=>item.RepDate=item.RepDate.split('T')[0])
         res.results.forEach((item,index)=>{
           // 该物资是物品
-          if(item.types==0){
-            item.price=item.quantity
-          }else{
+          if(item.types==1){
             item.quantity=  item.price
           }
         })
@@ -125,8 +126,7 @@ export default {
     }
     getUserDonateList()
 
-    //搜索框数据
-    const iptSearch=ref('')
+
     // 封装搜索数据函数
     function searchUsers(){
       console.log(iptSearch.value)
@@ -165,7 +165,6 @@ export default {
         }
       }else{
         getUserDonateList()
-
       }
     }
 
@@ -198,14 +197,15 @@ export default {
     const selectHandle=(val)=>{
       //  类型选择框选中值
      valSearch.value=val
-      // 当前数据是迷糊搜索
+      console.log(   valSearch.value)
+      // 当前数据是模糊搜索
       if(iptSearch.value.trim().length>0 ){
         // 类别选择的是现金
         if(val==1){
           getUserDonateLikeFn(1)
         }else if(val==0){
           getUserDonateLikeFn(0)
-        }else if(2){
+        }else if(val==2){
           searchUsers()
         }
       }else{
@@ -215,7 +215,7 @@ export default {
           getUserDonateListFn(1)
         }else if(val==0){
           getUserDonateListFn(0)
-        }else if(2){
+        }else if(val==2){
           getUserDonateList()
         }
       }
@@ -229,7 +229,14 @@ export default {
       }
       getUserDonateLike(result).then((res)=>{
         if(res.code==200){
+          console.log(res)
           UserDonateList.value=res.results.filter((item)=>item.type==num)
+          // UserDonateList.value.forEach((item,index)=>{
+          //   // 该物资是现金
+          //   if(item.types==1){
+          //     item.quantity=  item.price
+          //   }
+          // })
           PagingList.total=res.total
         }else{
           ElMessage({
@@ -248,7 +255,13 @@ export default {
       }
       getUserDonate(res).then((res)=>{
        if(res.code==200){
-         UserDonateList.value=res.results.filter((item)=>item.type==num)
+         UserDonateList.value=res.results.filter((item)=>item.types==num)
+         UserDonateList.value.forEach((item,index)=>{
+           // 该物资是现金
+           if(item.types==1){
+             item.quantity=  item.price
+           }
+         })
          PagingList.total=res.total
        }else{
          ElMessage({
@@ -268,7 +281,7 @@ export default {
       PagingList,
       donateToPage,
       toDataNum,
-      iptSearch,
+      iptSearch,getUserDonateList,
       searchUser,handleFullUser
     }
   },

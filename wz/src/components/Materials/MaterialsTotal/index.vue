@@ -177,21 +177,32 @@ export default {
     let materialName=ref('')
     // 通过物资名查询数据
     function getMaterialName(){
-      let result={
-        materialName:materialName.value,
-        page:PagingList.page,
-        num:PagingList.num
-      }
-      materialsNameList(result) .then((res)=>{
-        if(res.status==200 && res.results.length>0){
-          console.log(res)
-          MaterialsTogetherList.value=res.results
-          PagingList.total=res.total
-          iptSearch.value=''
-        }else{
-          getMaterialsTogether()
+      if(materialName.value.trim().length>0){
+        let result={
+          materialName:materialName.value,
+          page:PagingList.page,
+          num:PagingList.num
         }
-      })
+        materialsNameList(result) .then((res)=>{
+          if(res.status==200 && res.results.length>0){
+            console.log(res)
+            MaterialsTogetherList.value=res.results
+            PagingList.total=res.total
+            iptSearch.value=''
+          }else{
+            ElMessage({
+              message: '找不到该用户',
+              type: 'error',
+            })
+            iptSearch.value=''
+            getMaterialsTogether()
+          }
+        })
+      }else{
+        iptSearch.value=''
+        getMaterialsTogether()
+      }
+
     }
 
 
@@ -206,9 +217,12 @@ export default {
       materialsList(res).then((res)=>{
         console.log(res)
         if(res.status==200) {
-          // res.results.forEach((item)=>{
-          //   item.date=item.date.substring(0,10)
-          // })
+          res.results.forEach((item)=>{
+            if(item.type=='现金'){
+              console.log(item)
+              item.quantity=item.price
+            }
+          })
           MaterialsTogetherList.value = res.results
           PagingList.total=res.total
         }
@@ -268,8 +282,8 @@ export default {
     const DelSelect=()=>{
       if(selectList.value.length==0) return
       let arr=selectList.value
-      console.log(arr)
       arr.forEach((item)=>{
+        console.log(item)
         putMaterialsState(item.tid)
       })
       console.log( selectList.value)
