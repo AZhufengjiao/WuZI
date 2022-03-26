@@ -19,6 +19,9 @@ const {
   findSearchScarceMaterial,
   materialScarcityCountSql,
   findSearchScarceMaterialCount,
+  postMaterialOfStorage,
+  findPutStorageList,
+  findPutStorageCount,
 } = require("../model/material");
 // 后端校验
 const Joi = require("joi");
@@ -42,18 +45,17 @@ module.exports.materialList = async (ctx) => {
   arr.forEach((item) => {
     item.date = updateDate(item.date);
     // 物品
-    if (item.type == 1) {
-      item.quantity = item.price;
+    if (item.materialname == "现金") {
       item.type = "现金";
     } else {
       item.type = "物品";
     }
   });
-  let length = await materialListTotal();
+  let total = await materialListTotal();
   ctx.body = {
     status: 200,
     results: arr,
-    total: length[0].total,
+    total: total.length,
     message: "总物资列表获取成功",
   };
 };
@@ -372,6 +374,67 @@ module.exports.searchScarceMaterial = async (ctx) => {
     data: {
       searchScarceMaterial,
       total: total[0].total,
+    },
+  });
+};
+
+// 获取入库数据
+
+// 添加物资入库
+module.exports.postMaterialOfStorage = async (ctx) => {
+  let {
+    id,
+    putStorageDate,
+    putMaterialType,
+    putMaterialName,
+    pid,
+    putMaterialAmount,
+    putPriceAmount,
+  } = ctx.request.body;
+
+  let addMaterial;
+
+  if (putMaterialType === 1) {
+    addMaterial = await postMaterialOfStorage({
+      id,
+      putStorageDate,
+      putMaterialType,
+      putMaterialName,
+      pid,
+      putPriceAmount,
+    });
+  } else {
+    addMaterial = await postMaterialOfStorage({
+      id,
+      putStorageDate,
+      putMaterialType,
+      putMaterialName,
+      pid,
+      putMaterialAmount,
+    });
+  }
+
+  return (ctx.body = {
+    code: 200,
+    message: "入库成功",
+  });
+};
+
+module.exports.getPutStorageList = async (ctx) => {
+  let { pageNum, pageSize } = ctx.request.query;
+
+  let putStorageList = await findPutStorageList({ pageNum, pageSize });
+
+  let total = await findPutStorageCount();
+
+  return (ctx.body = {
+    code: 200,
+    message: "入库物资数据获取成功",
+    data: {
+      items: putStorageList,
+      total: total[0].total,
+      pageNum,
+      pageSize,
     },
   });
 };

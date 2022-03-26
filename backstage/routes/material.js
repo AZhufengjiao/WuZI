@@ -11,7 +11,9 @@ const {
   materialScarcityList,
   getMaterialByDate,
   getPrincipal,
-  searchScarceMaterial, // 稀缺物资
+  searchScarceMaterial,
+  postMaterialOfStorage, // 稀缺物资
+  getPutStorageList,
 } = require("../controller/materialList");
 
 router.prefix("/material");
@@ -39,5 +41,9 @@ router.get("/getMaterialByDate", getMaterialByDate);
 router.get("/getPrincipal", getPrincipal);
 
 router.get("/searchScarceMaterial", searchScarceMaterial);
+
+router.post("/postMaterialOfStorage", postMaterialOfStorage);
+
+router.get("/getPutStorageList", getPutStorageList);
 
 module.exports = router;
