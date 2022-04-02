@@ -14,6 +14,13 @@ const {
   searchScarceMaterial,
   postMaterialOfStorage, // 稀缺物资
   getPutStorageList,
+  getPutStorageByMatertialName,
+  updatePutStorageDataById,
+  getDeliveryStorageList,
+  getExistingMaterialList,
+  postDeliveryStorageMaterial,
+  getDeliveryStorageListByDate,
+  getDeliveryStorageListBySearch,
 } = require("../controller/materialList");
 
 router.prefix("/material");
@@ -35,15 +42,36 @@ router.delete("/delState", delState);
 
 // 获取稀缺物资分页数据
 router.get("/materialScarcityList", materialScarcityList);
-
+// 根据日期获取物资数据
 router.get("/getMaterialByDate", getMaterialByDate);
 
+// 获取负责人
 router.get("/getPrincipal", getPrincipal);
-
+// 搜索稀缺物资
 router.get("/searchScarceMaterial", searchScarceMaterial);
-
+// 添加入库数据
 router.post("/postMaterialOfStorage", postMaterialOfStorage);
-
+// 获取入库数据列表
 router.get("/getPutStorageList", getPutStorageList);
+// 根据物资名称获取入库数据
+router.get("/getPutStorageByMatertialName", getPutStorageByMatertialName);
+
+// 根据id修改物资数据
+router.put("/updatePutStorageData", updatePutStorageDataById);
+
+// 出库数据列表
+router.get("/getDeliveryStorageList", getDeliveryStorageList);
+
+// 根据日期获取出库数据列表
+router.get("/getDeliveryStorageListByDate", getDeliveryStorageListByDate);
+
+// 根据物资名称获取出库数据列表
+router.get("/getDeliveryStorageListBySearch", getDeliveryStorageListBySearch);
+
+// 搜索库存物资 --> 专人发放页面
+router.get("/getExistingMaterialList", getExistingMaterialList);
+
+// 添加出库数据 --> 专人发放页面
+router.post("/postDeliveryStorageMaterial", postDeliveryStorageMaterial);
 
 module.exports = router;
