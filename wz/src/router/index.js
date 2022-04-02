@@ -58,7 +58,7 @@ const routes = [
                 path:'/home/material',
                 name:'Material',
                 meta:{title:'物资管理'},
-                redirect: '/home/Materials/Together',
+                redirect: '/home/Materials/together',
                 component: () => import("../components/Materials/index.vue"),
                 children:[
                     {
@@ -106,7 +106,25 @@ const routes = [
                     }
                 ]
             },
+            {
+                path:'/home/distribute',
+                name:'Distribute',
+                meta:{title:'物资分配'},
+                redirect: '/home/distribute/provide',
+                component:()=>import('../components/Distribute/index.vue'),
+                children: [
+                    {
+                        path:'/home/distribute/provide',
+                        name: {
+                            name:'Provide',
+                            index:'4-1'
+                        },
+                        component:()=>import('../components/Distribute/Provide/index.vue'),
+                        meta:{title:'专人发放'},
 
+                    }
+                ]
+            }
         ]
     }
 ];

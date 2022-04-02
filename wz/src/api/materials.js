@@ -48,4 +48,33 @@ export function materialScarcityLikeName({materialName,pageNum,pageSize}){
 }
 
 
-// 入库物资数据
+// 入库物资总数据获取
+export  function materialStorageList({pageNum,pageSize}){
+return requestWithoutToken('/material/getPutStorageList','get',{pageNum,pageSize})
+}
+// 入库 添加数据
+export  function addMaterialStorage(obj){
+    return requestWithoutToken('/material/postMaterialOfStorage','post',obj)
+}
+// 根据物资名模糊查询入库数据
+export  function  searchMaterialName(obj){
+    return requestWithoutToken('/material/getPutStorageByMatertialName','get',obj)
+}
+// 根据入库物资id修改入库数据
+export  function  updateMaterialList(obj){
+    return requestWithoutToken('/material/updatePutStorageData','put',obj)
+}
+
+
+// 获取出库数据
+export  function  getChuKu({pageNum,pageSize}){
+    return requestWithoutToken('/material/getDeliveryStorageList','get',{pageNum,pageSize})
+}
+// 根据时间获取出库数据
+export function dateChuKu(obj){
+    return requestWithoutToken('/material/getDeliveryStorageListByDate','get',obj)
+}
+// 根据物资名模糊查询获取出库物资
+export  function  getChuKuList(obj){
+    return requestWithoutToken('/material/getDeliveryStorageListBySearch','get',obj)
+}

@@ -12,38 +12,38 @@
            class="menu"
            :default-openeds="['1']">
     <router-link to="/home/main"  class="toggle">
+<!--   首页   -->
     <el-menu-item index="1">
       <el-icon><home-filled /></el-icon>
       <span>首页</span>
     </el-menu-item>
     </router-link>
 
+<!--  用户管理  -->
     <el-sub-menu index="2">
       <template #title>
         <el-icon><user-filled /></el-icon>
         <span>用户管理</span>
       </template>
 
-      <!--   用户列表   -->
       <router-link  class="toggle" to="/home/user/userList">
        <el-menu-item index="2-1">
          用户列表
        </el-menu-item>
       </router-link>
 
-      <!--   用户捐赠   -->
       <router-link class="toggle" to="/home/user/userDonate">
       <el-menu-item index="2-2">用户捐赠</el-menu-item>
       </router-link>
     </el-sub-menu>
 
+<!--  物资管理  -->
     <el-sub-menu index="3">
       <template #title>
         <el-icon><setting /></el-icon>
         <span>物资管理</span>
       </template>
 
-      <!--   相伴管理   -->
       <router-link   to="/home/materials/together">
         <el-menu-item index="3-1">相伴管理</el-menu-item>
       </router-link>
@@ -56,7 +56,7 @@
       </router-link>
 
       <router-link to="/home/material/storage">
-      <el-menu-item index="3-4">入库物资</el-menu-item>
+      <el-menu-item index="3-4">现有库存</el-menu-item>
       </router-link>
 
       <router-link to="/home/material/chuku">
@@ -64,13 +64,15 @@
       </router-link>
     </el-sub-menu>
 
+<!--   物资分配   -->
     <el-sub-menu index="4">
       <template #title>
         <el-icon><setting /></el-icon>
         <span>物资分配</span>
       </template>
-      <el-menu-item index="4-1">专人发放</el-menu-item>
-      <el-menu-item index="4-2">物资采购</el-menu-item>
+      <router-link to="/home/distribute/provide">
+        <el-menu-item index="4-1">专人发放</el-menu-item>
+      </router-link>
     </el-sub-menu>
   </el-menu>
 

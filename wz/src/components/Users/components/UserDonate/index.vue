@@ -41,7 +41,7 @@
       </el-row>
 
       <!--   表格   -->
-      <Table highlight-current-row @handleFullUser="handleFullUser"  @HistoryUsername="HistorySearchUsers" :UserDonateList="UserDonateList" class="table" border  size="large" style="width: 2190px" ></Table>
+      <Table   stripe   highlight-current-row @handleFullUser="handleFullUser"  @HistoryUsername="HistorySearchUsers" :UserDonateList="UserDonateList" class="table" border  size="large" style="width: 2190px" ></Table>
 
 <!--   分页   -->
       <Paging :PagingList="PagingList" @todatanum="toDataNum" @todata="donateToPage"></Paging>

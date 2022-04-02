@@ -23,7 +23,7 @@
     </el-row>
 
     <!-- 表格 -->
-    <el-table highlight-current-row class="table" v-loading="loading" :data="tableData.value " border  size="large" style="width: 100% ">
+    <el-table border stripe highlight-current-row   class="table" v-loading="loading" :data="tableData.value "   size="large" style="width: 100% ">
       <el-table-column prop="id" label="序号" width="60"/>
       <el-table-column prop="username" label="姓名"  />
       <el-table-column prop="mobile" label="电话"  />

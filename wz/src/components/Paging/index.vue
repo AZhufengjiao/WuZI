@@ -32,6 +32,7 @@ export default {
       emit('todata',page)
     }
     const handleSizeChange=(index)=>{
+      console.log(index)
       emit('todatanum',index)
     }
 return {
