@@ -45,14 +45,20 @@
                 @select="handleSelectionChange"
                 :data="MaterialsTogetherList.value"
                 style="width: 100%;margin-top: 20px">
-        <el-table-column   type="index" width="50"/>
-        <el-table-column prop="putDate" v-if="!flag " label="时间" width="120"/>
+        <el-table-column   type="index" width="20"/>
+        <el-table-column prop="putDate" v-if="!flag " label="时间" width="100"/>
 <!--        <el-table-column v-if="!flag" type="selection" width="55"/>-->
-        <el-table-column prop="type" label="物资类型" width="120"/>
-        <el-table-column prop="materialname" label="物资名称" width="120"/>
-        <el-table-column v-if="flag " prop="count" label="捐赠次数" width="120"/>
-        <el-table-column v-if="!flag " prop="username" label="捐赠人" width="120"/>
-        <el-table-column prop="quantity" label="物资总数量" width="600"/>
+        <el-table-column prop="type" label="物资类型" width="100"/>
+        <el-table-column prop="materialname" label="物资名称" width="100"/>
+        <el-table-column v-if="flag " prop="frequency" label="捐赠次数" width="150"/>
+        <el-table-column v-if="!flag " prop="username" label="捐赠人" width="100"/>
+        <el-table-column prop="quantity" label="物资总数量" width="100"/>
+        <el-table-column v-if="!flag " prop="status" label="物资状态" width="350">
+          <template #default="scope">
+             <el-tag v-if="scope.row.status==0" >未出库   </el-tag>
+             <el-tag v-if="scope.row.status==1" class="ml-2" type="success">已出库</el-tag>
+          </template>
+        </el-table-column>
         <el-table-column fixed="right" label="操作" width="120">
           <template #default="scope">
 

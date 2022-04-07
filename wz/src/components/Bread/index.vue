@@ -21,7 +21,7 @@ export default {
         matched=[{path:'/home',meta:{title:'首页'}}].concat(matched)
       }
       levelList.value=matched
-      console.log( levelList.value)
+      // console.log( levelList.value)
     }
     getBreadCrumb()
 

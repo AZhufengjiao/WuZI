@@ -261,10 +261,9 @@ export default {
 
     // 登录
     const submitForm=(ruleFormRef)=>{
-      console.log(111)
       userLogin(ruleFormRef.model.user,ruleFormRef.model.password).then((data)=>{
-        console.log(data)
         if(data.status==200){
+          // console.log(data)
             // 添加token
             store.commit('login/setToken',data.token)
             ElMessage.success('登录成功')
@@ -288,7 +287,10 @@ export default {
         store.commit('login/setFlag',!checked.value)
     }
     return {
-      checkCli, input,ruleForm,ruleFormRef,checked,rules,submitForm,registerSubmitForm,registerCancelForm,dialogFormVisible,registerForm,registerRules,registerFormRef,formLabelWidth
+      checkCli,
+      input,
+      ruleForm,
+      ruleFormRef,checked,rules,submitForm,registerSubmitForm,registerCancelForm,dialogFormVisible,registerForm,registerRules,registerFormRef,formLabelWidth
     }
   },
   components:{
@@ -307,7 +309,7 @@ export default {
 overflow: hidden;
   width: 100%;
   height: 100%;
-  background : url("./src/assets/images/bgi.webp")no-repeat;
+  background : url("./src/assets/images/wz.png")no-repeat;
   background-size:100% 100% ;
   box-sizing: border-box;
   .mask{

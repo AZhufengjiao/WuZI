@@ -22,7 +22,7 @@
               <h4>支付  </h4>
               <span>年率增长次数</span>
 
-              <span class="Material_box_li_span blue">  -10%</span>
+              <span class="Material_box_li_span blue">  +10%</span>
             </li>
           </ul>
         </div>
@@ -41,17 +41,17 @@
            <li class="Material_box_li">
              <h3>救援  </h3>
 
-             <span class="Material_box_li_span  "> +24%</span>
+             <span class="Material_box_li_span  violet"> +3%</span>
            </li>
            <li class="Material_box_li">
              <h3>支付  </h3>
 
-             <span class="Material_box_li_span  "> +568586</span>
+             <span class="Material_box_li_span green "> +286</span>
            </li>
            <li class="Material_box_li">
              <h3>支付  </h3>
 
-             <span class="Material_box_li_span gray">  -10%</span>
+             <span class="Material_box_li_span blue"> +10%</span>
            </li>
          </ul>
        </div>
@@ -175,7 +175,7 @@ color: #34bfa3  !important;
    color: #a09cb8;    font-weight: 400 !important;
  }
 .left_bottom_box{
-  width: 1116px; // 1116
+  //width: 1116px; // 1116
   width: 1064px; // 1064
   height:388px;
 }

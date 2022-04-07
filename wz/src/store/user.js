@@ -12,8 +12,6 @@ const user={
     },
     mutations:{
         setIndex(state,payload){
-
-            console.log(payload)
             state.index=payload
         }
     }

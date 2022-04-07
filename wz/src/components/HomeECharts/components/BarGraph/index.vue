@@ -6,9 +6,16 @@
 <script >
 import * as echarts from 'echarts';
 import {onMounted} from "vue";
+import {getExistingMaterial} from "../../../../api/echarts";
 export default {
   name: "index",
   setup(){
+    const getExisting=()=>{
+      getExistingMaterial().then((res)=>{
+        // console.log(res)
+      })
+    }
+
     const getEcharts=()=>{
       const chartDom = document.getElementById('main');
       const  myChart = echarts.init(chartDom);
@@ -53,6 +60,7 @@ export default {
     }
     onMounted(()=>{
       getEcharts()
+      getExisting()
     })
 
   }

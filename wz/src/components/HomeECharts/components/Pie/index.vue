@@ -7,11 +7,27 @@
 
 <script>
 import * as echarts from 'echarts';
-import {onMounted} from "vue";
+import {onMounted, ref} from "vue";
+import {getExistingMaterial} from "../../../../api/echarts";
 export default {
   name: "index",setup(){
 
+    // const getExisting=()=>{
+    //   getExistingMaterial().then((res)=>{
+    //       list.value=res.data.items
+    //     console.log( list.value)
+    //   })
+    //   console.log(   list.value)
+    // }
     const getEcharts=()=>{
+      let list=ref([])
+      const getExisting=()=>{
+        getExistingMaterial().then((res)=>{
+          // console.log(res)
+            list.value=res.data.items
+        })
+      }
+      getExisting()
       const  chartDom = document.getElementById('pie');
       const myChart = echarts.init(chartDom);
       let option;
@@ -39,13 +55,14 @@ export default {
             itemStyle: {
               borderRadius: 6
             },
+            // data:list.value
             data: [
-              { value: 40, name: 'rose 1' },
-              { value: 38, name: 'rose 2' },
-              { value: 32, name: 'rose 3' },
-              { value: 30, name: 'rose 4' },
-              { value: 28, name: 'rose 5' },
-              { value: 26, name: 'rose 6' },
+              { value: 40, name: '口罩' },
+              { value: 38, name: '防护服' },
+              { value: 32, name: '泡面' },
+              { value: 30, name: '蔬菜' },
+              { value: 28, name: '被子' },
+              { value: 26, name: '矿泉水' },
             ]
           }
         ]
@@ -56,7 +73,12 @@ export default {
 
     onMounted(()=>{
       getEcharts()
+
     })
+
+    return {
+
+    }
   }
 }
 </script>

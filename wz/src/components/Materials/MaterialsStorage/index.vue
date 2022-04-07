@@ -177,6 +177,7 @@ const dataLikeName=(str)=>{
       }
       materialStorageList(obj).then((res)=>{
         if(res.code==200){
+          console.log(res)
           Flag.value=0
           res.data.items.forEach((item)=>{
             if(item.type==0){
@@ -335,7 +336,6 @@ const dataLikeName=(str)=>{
     const getOptions=()=>{
       materialPrincipal().then((res)=>{
         if(res.code==200){
-
           options.value=res.data.principal
         }
       })
@@ -417,6 +417,13 @@ const dataLikeName=(str)=>{
           }
 
           addMaterialStorage(addDateForm).then((res)=>{
+            console.log(res)
+            if(res.code==0){
+            return  ElMessage({
+                message: '捐赠人不存在',
+                type: 'warning',
+              })
+            }
             if(res.code==200){
               ElMessage({
                 message: '物资添加成功',
@@ -433,9 +440,11 @@ const dataLikeName=(str)=>{
               value.value=''
               stateValue.value=''
             }
+
+            centerDialogVisible.value = false
           })
 
-          centerDialogVisible.value = false
+
         } else {
           return false
         }

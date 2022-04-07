@@ -7,7 +7,6 @@ import {requestWithoutToken, requestWithToken} from '../utils/request'
  * @returns {*}
  */
 export  function  userLogin(username,password){
-    console.log(username,password)
     return requestWithToken('/login','post',{username,password})
 }
 

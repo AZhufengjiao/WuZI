@@ -111,11 +111,11 @@ export default {
         num:PagingList.num
       }
       getUserDonate(res).then((res)=>{
-        console.log(res) // 2020-06-27 14:20:27
+        // console.log(res) // 2020-06-27 14:20:27
         // res.results.forEach((item)=>item.RepDate=item.RepDate.split('T')[0])
         res.results.forEach((item,index)=>{
           // 该物资是物品
-          if(item.types==1){
+          if(item.types==0){
             item.quantity=  item.price
           }
         })
@@ -229,7 +229,7 @@ export default {
       }
       getUserDonateLike(result).then((res)=>{
         if(res.code==200){
-          console.log(res)
+          // console.log(res)
           UserDonateList.value=res.results.filter((item)=>item.type==num)
           // UserDonateList.value.forEach((item,index)=>{
           //   // 该物资是现金
