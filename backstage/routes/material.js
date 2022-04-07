@@ -21,6 +21,9 @@ const {
   postDeliveryStorageMaterial,
   getDeliveryStorageListByDate,
   getDeliveryStorageListBySearch,
+  getDonationsDataBySixMonths,
+  getExistingMaterial,
+  getDonationsDataByOneWeek,
 } = require("../controller/materialList");
 
 router.prefix("/material");
@@ -73,5 +76,14 @@ router.get("/getExistingMaterialList", getExistingMaterialList);
 
 // 添加出库数据 --> 专人发放页面
 router.post("/postDeliveryStorageMaterial", postDeliveryStorageMaterial);
+
+// 获取六个月内的捐赠情况
+router.get("/getDonationsData", getDonationsDataBySixMonths);
+
+// 获取现有物资情况
+router.get("/getExistingMaterial", getExistingMaterial);
+
+// 获取一周内的捐赠情况
+router.get("/getDonationsDataByOneWeek", getDonationsDataByOneWeek);
 
 module.exports = router;

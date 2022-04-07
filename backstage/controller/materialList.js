@@ -42,6 +42,14 @@ const {
   findTotalMaterialByName,
   findTotalMaterialQuantityByName,
   findTotalMaterialPriceByName,
+  deleteDeliveryStorageMaterials,
+  getDonationsData,
+  getExistingMaterial,
+  getDonationsDataByOneWeek,
+  checkUserName,
+  postUserDonate,
+  getDonationsDataBySixMonths,
+  findDonationsDataByOneWeek,
 } = require("../model/material");
 // 后端校验
 const Joi = require("joi");
@@ -401,6 +409,16 @@ module.exports.postMaterialOfStorage = async (ctx) => {
     amount,
   } = ctx.request.body;
 
+  let checkResult = await checkUserName({ username });
+  console.log(checkResult);
+
+  if (!checkResult[0]) {
+    return (ctx.body = {
+      code: 0,
+      message: "用户不存在",
+    });
+  }
+
   await postToTotalMaterial({ putMaterialName, amount });
 
   let addMaterial;
@@ -414,6 +432,15 @@ module.exports.postMaterialOfStorage = async (ctx) => {
       pid,
       putPriceAmount: amount,
     });
+
+    await postUserDonate({
+      id: checkResult[0].id,
+      username,
+      type: putMaterialType,
+      materialName: putMaterialName,
+      price: amount,
+      date: putStorageDate,
+    });
   } else {
     addMaterial = await postMaterialOfStorage({
       username,
@@ -422,6 +449,15 @@ module.exports.postMaterialOfStorage = async (ctx) => {
       putMaterialName,
       pid,
       putMaterialAmount: amount,
+    });
+
+    await postUserDonate({
+      id: checkResult[0].id,
+      username,
+      type: putMaterialType,
+      materialName: putMaterialName,
+      quantity: amount,
+      date: putStorageDate,
     });
   }
 
@@ -668,7 +704,7 @@ module.exports.getExistingMaterialList = async (ctx) => {
     message: "库存物资模糊查询成功",
     data: {
       items: existingMaterialList,
-      total: total.length,
+      total: total[0].total,
       pageNum,
       pageSize,
     },
@@ -678,7 +714,7 @@ module.exports.getExistingMaterialList = async (ctx) => {
 // 专人发放页面点击出库后，修改总仓库数据的状态，在把数据添加到出库表中
 module.exports.postDeliveryStorageMaterial = async (ctx) => {
   let {
-    id,
+    ids,
     pid,
     materialName,
     address,
@@ -697,10 +733,54 @@ module.exports.postDeliveryStorageMaterial = async (ctx) => {
     deliveryDate,
   });
 
-  await updateMaterialStatus({ id });
+  await deleteDeliveryStorageMaterials(ids);
 
   return (ctx.body = {
     code: 200,
     message: "出库操作成功",
   });
+};
+
+// 首页捐赠情况eCharts柱状图数据
+module.exports.getDonationsData = async (ctx) => {
+  let getResult = await getDonationsData();
+
+  return (ctx.body = {
+    code: 200,
+    message: "捐赠情况数据获取成功",
+    data: {
+      items: getResult,
+    },
+  });
+};
+
+// 首页六个月以内的捐赠情况eCharts柱状图数据
+module.exports.getDonationsDataBySixMonths = async (ctx) => {
+  let getResult = await getDonationsDataBySixMonths();
+
+  return (ctx.body = {
+    code: 200,
+    message: "捐赠情况数据获取成功",
+    data: {
+      items: getResult,
+    },
+  });
+};
+
+// 获取现有物资情况 -> 首页
+module.exports.getExistingMaterial = async (ctx) => {
+  let getResult = await getExistingMaterial();
+  return (ctx.body = {
+    code: 200,
+    message: "物资情况数据获取成功",
+    data: {
+      items: getResult,
+    },
+  });
+};
+
+// 首页一周以内的捐赠情况eCharts线性图数据
+module.exports.getDonationsDataByOneWeek = async () => {
+  let getResult = await findDonationsDataByOneWeek();
+  console.log(getResult);
 };

@@ -141,15 +141,23 @@ module.exports.getUserLike = async (ctx) => {
   }
 };
 
+const moment = require("moment");
+// 定义修改日期的函数
+function updateDate(date) {
+  return moment(date).format("YYYY-MM-DD  h:mm");
+}
 // 捐赠页面
 // 获取用户捐赠分页列表
 module.exports.getUserDonate = async (ctx) => {
   const { page, num } = ctx.request.query;
 
   const res = await userDonate(page, num);
-  console.log(res);
+
+  res.forEach((item) => {
+    item.RepDate = updateDate(item.RepDate);
+  });
+
   const total = await userDonateTotal();
-  console.log(total[0].total);
 
   console.log(res);
   if (res[0]) {
