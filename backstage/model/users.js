@@ -51,7 +51,9 @@ module.exports.usernameLike = async (username, num, page) => {
  */
 module.exports.userDonate = async (page, num) => {
   return await query(
-    `SELECT * FROM userdonate ORDER BY did LIMIT ${(page - 1) * num},${num}`
+    `SELECT ud.*, u.mobile FROM userdonate ud, user u where ud.id = u.id ORDER BY did LIMIT ${
+      (page - 1) * num
+    },${num}`
   );
 };
 // 获取用户捐赠列表总数

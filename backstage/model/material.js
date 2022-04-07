@@ -285,7 +285,7 @@ module.exports.findExistingMaterialList = async ({
   pageNum,
   pageSize,
 }) => {
-  let sql = `select materialname, SUM(price) as priceAmount, SUM(quantity) quantityAmount FROM putstorage WHERE materialname LIKE '%${materialName}%' AND status = 0 GROUP BY materialname LIMIT ${
+  let sql = `select ps.*, p.principalName FROM putstorage ps, principal p WHERE ps.pid = p.pid and materialname LIKE '%${materialName}%' AND status = 0 LIMIT ${
     (pageNum - 1) * pageSize
   }, ${pageSize};`;
   return query(sql);
@@ -293,7 +293,7 @@ module.exports.findExistingMaterialList = async ({
 
 // 搜索存库物资数据总数量 --专人发放页面
 module.exports.findExistingMaterialCount = async ({ materialName }) => {
-  let sql = `select materialname FROM putstorage WHERE materialname LIKE '%${materialName}%' AND status = 0 GROUP BY materialname;`;
+  let sql = `select count(*) total FROM putstorage WHERE materialname LIKE '%${materialName}%' AND status = 0;`;
   return query(sql);
 };
 
@@ -334,5 +334,57 @@ module.exports.findTotalMaterialQuantityByName = async ({ materialName }) => {
 
 module.exports.findTotalMaterialPriceByName = async ({ materialName }) => {
   let sql = `select sum(price) price from putstorage where materialname = '${materialName}'`;
+  return query(sql);
+};
+
+// 批量出库
+module.exports.deleteDeliveryStorageMaterials = async (ids) => {
+  let strIds = "";
+
+  for (let i = 0; i < ids.length; i++) {
+    strIds += `${ids[i]},`;
+  }
+
+  strIds = strIds.substring(0, strIds.length - 1);
+
+  let sql = `update putstorage set status = 1 where tid in(${strIds})`;
+
+  return query(sql);
+};
+
+// 获取最近六个月的捐赠情况 -> 首页捐赠情况eCharts
+module.exports.getDonationsDataBySixMonths = async () => {
+  let sql = `select DATE_FORMAT(putDate,'%Y-%m') months,count(*) count from putstorage where DATE_SUB(CURDATE(), INTERVAL 6 MONTH) <= date(putDate) group by months;`;
+  return query(sql);
+};
+
+// 获取现有物资情况 -> 首页
+module.exports.getExistingMaterial = async () => {
+  let sql = `select materialname name, frequency value from totalmaterial`;
+  return query(sql);
+};
+
+// 首页一周以内的捐赠情况eCharts线性图数据
+module.exports.findDonationsDataByOneWeek = async () => {
+  let sql = `select count(*) count, ps.materialname from putstorage ps, (SELECT
+	DATE_SUB( CURDATE( ), INTERVAL 6 DAY ) as lastweek) date  where DATE_FORMAT(ps.putDate,'%Y-%m-%d') = date.lastweek GROUP BY materialname;`;
+  return query(sql);
+};
+
+module.exports.checkUserName = async ({ username }) => {
+  let sql = `select * from user where username = '${username}'`;
+  return query(sql);
+};
+
+module.exports.postUserDonate = async ({
+  id,
+  username,
+  materialName,
+  type,
+  quantity = 0,
+  price = 0,
+  date,
+}) => {
+  let sql = `insert into userdonate(id, username, goodname, types, quantity, price, RepDate) values(${id}, '${username}', '${materialName}', ${type}, ${quantity}, ${price}, '${date}')`;
   return query(sql);
 };
