@@ -12,7 +12,7 @@ import  store from '@/store'
 
 createApp(App).use(router).use(store).use(ElementPlus).mount('#app')
 
-// // 路由守卫
+// // // 路由守卫
 // router.beforeEach((to,from,next)=>{
 //   let token=store.state.login.token
 //   if(token){  // 如果有token值，并且要退回到登录页面，通过next 跳回到/
