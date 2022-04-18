@@ -178,6 +178,7 @@ module.exports.userDonateNameLike = async (ctx) => {
   const total = await userDonateLikeTotal(username);
 
   res.forEach((item) => {
+    item.RepDate = updateDate(item.RepDate);
     item.type = Boolean(item.type);
   });
   console.log(res);
@@ -205,6 +206,7 @@ module.exports.userDonateId = async (ctx) => {
   const total = await userDonateTotalId(id);
 
   res.forEach((item) => {
+    item.RepDate = updateDate(item.RepDate);
     item.type = Boolean(item.type);
   });
   console.log(res);
